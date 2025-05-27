@@ -9,42 +9,7 @@
 	<section>
 		<div class="container p-5">
 			<p class="text-center fs-3 mt-4">Admin Dashboard</p>
-			<!-- Thống kê tổng quan -->
-			<div class="row mb-4">
-				<div class="col-md-3">
-					<div class="card text-center">
-						<div class="card-body">
-							<h5>Khách hàng</h5>
-							<h3 th:text="${userCount}"></h3>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="card text-center">
-						<div class="card-body">
-							<h5>Sản phẩm</h5>
-							<h3 th:text="${productCount}"></h3>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="card text-center">
-						<div class="card-body">
-							<h5>Doanh thu</h5>
-							<h3 th:text="${totalRevenue}"></h3>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="card text-center">
-						<div class="card-body">
-							<h5>Bán chạy nhất</h5>
-							<h6 th:text="${bestProduct}"></h6>
-							<span th:text="${bestProductSold}"></span> lượt bán
-						</div>
-					</div>
-				</div>
-			</div>
+			<!-- Đã xóa phần thống kê, chỉ giữ lại menu chức năng -->
 			<div class="row p-5">
 				<div class="col-md-4 mt-2">
 					<a href="/admin/loadAddProduct" class="text-decoration-none">
@@ -111,7 +76,7 @@
 						<div class="card card-sh">
 							<div class="card-body text-center text-primary">
 								<i class="fa-solid fa-user-plus fa-3x"></i>
-								<h4>Add Admin</h4>
+								<h4>Add staff  </h4>
 							</div>
 						</div>
 					</a>
@@ -127,8 +92,16 @@
 						</div>
 					</a>
 				</div>
-
-
+				<div class="col-md-4 mt-4">
+					<a href="/admin/thongke" class="text-decoration-none">
+						<div class="card card-sh">
+							<div class="card-body text-center text-info">
+								<i class="fa-solid fa-chart-bar fa-3x"></i>
+								<h4>Thống kê</h4>
+							</div>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
 	</section>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Thống kê - EcomStore</title>
+</head>
+<body>
+	<section>
+		<div class="container p-5">
+			<p class="text-center fs-3 mt-4">Thống kê tổng quan</p>
+			<div class="row mb-4">
+				<div class="col-md-3">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5>Khách hàng</h5>
+							<h3 th:text="${userCount}"></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5>Sản phẩm</h5>
+							<h3 th:text="${productCount}"></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5>Doanh thu</h5>
+							<h3 th:text="${totalRevenue}"></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5>Bán chạy nhất</h5>
+							<h6 th:text="${bestProduct}"></h6>
+							<span th:text="${bestProductSold}"></span> lượt bán
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html> 

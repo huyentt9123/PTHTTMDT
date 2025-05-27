@@ -490,4 +490,27 @@ public class AdminController {
 		return "redirect:/admin/profile";
 	}
 
+	@GetMapping("/thongke")
+	public String thongKe(Model m) {
+		long userCount = userService.countByRole("ROLE_USER");
+		long productCount = productService.getAllProducts().size();
+		Double totalRevenue = orderService.getTotalRevenue();
+		Object[] bestSelling = orderService.getBestSellingProduct();
+
+		String bestProduct = "N/A";
+		Long bestProductSold = 0L;
+		if (bestSelling != null && bestSelling.length >= 2) {
+			if (bestSelling[0] != null) bestProduct = bestSelling[0].toString();
+			if (bestSelling[1] != null) bestProductSold = ((Number) bestSelling[1]).longValue();
+		}
+
+		m.addAttribute("userCount", userCount);
+		m.addAttribute("productCount", productCount);
+		m.addAttribute("totalRevenue", totalRevenue);
+		m.addAttribute("bestProduct", bestProduct);
+		m.addAttribute("bestProductSold", bestProductSold);
+
+		return "admin/thongke";
+	}
+
 }
