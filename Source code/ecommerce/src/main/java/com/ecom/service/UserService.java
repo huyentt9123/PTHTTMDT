@@ -38,4 +38,6 @@ public interface UserService {
 
 	long countByRole(String role);
 
+	public Boolean deleteUser(Integer id);
+
 }

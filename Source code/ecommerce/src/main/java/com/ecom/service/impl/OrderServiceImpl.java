@@ -140,4 +140,25 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.getBestSellingProduct();
 	}
 
+	@Override
+	public Long getTotalOrderCount() {
+		Long count = orderRepository.getTotalOrderCount();
+		return count != null ? count : 0L;
+	}
+
+	@Override
+	public List<Object[]> getRevenueByDay() {
+		return orderRepository.getRevenueByDay();
+	}
+
+	@Override
+	public List<Object[]> getRevenueByMonth() {
+		return orderRepository.getRevenueByMonth();
+	}
+
+	@Override
+	public List<Object[]> getRevenueByYear() {
+		return orderRepository.getRevenueByYear();
+	}
+
 }

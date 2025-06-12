@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả thanh toán Momo</title>
+</head>
+<body>
+    <div class="container p-5">
+        <h2>Kết quả thanh toán Momo</h2>
+        <table border="1" cellpadding="8" style="margin-top:20px;">
+            <tr>
+                <th>Tham số</th>
+                <th>Giá trị</th>
+            </tr>
+            <tr th:each="entry : ${params.entrySet()}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
+        </table>
+        <a href="/" style="display:inline-block;margin-top:20px;">Về trang chủ</a>
+    </div>
+</body>
+</html> 

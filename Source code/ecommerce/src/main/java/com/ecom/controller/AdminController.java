@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.Category;
@@ -504,13 +505,45 @@ public class AdminController {
 			if (bestSelling[1] != null) bestProductSold = ((Number) bestSelling[1]).longValue();
 		}
 
+		Long orderCount = orderService.getTotalOrderCount();
+
 		m.addAttribute("userCount", userCount);
 		m.addAttribute("productCount", productCount);
 		m.addAttribute("totalRevenue", totalRevenue);
 		m.addAttribute("bestProduct", bestProduct);
 		m.addAttribute("bestProductSold", bestProductSold);
+		m.addAttribute("orderCount", orderCount);
 
 		return "admin/thongke";
+	}
+
+	@GetMapping("/deleteUser/{id}")
+	public String deleteUser(@PathVariable Integer id, @RequestParam Integer type, HttpSession session) {
+		Boolean deleted = userService.deleteUser(id);
+		if (deleted) {
+			session.setAttribute("succMsg", "User deleted successfully");
+		} else {
+			session.setAttribute("errorMsg", "Something went wrong on server");
+		}
+		return "redirect:/admin/users?type=" + type;
+	}
+
+	@GetMapping("/revenue-by-day")
+	@ResponseBody
+	public List<Object[]> getRevenueByDay() {
+		return orderService.getRevenueByDay();
+	}
+
+	@GetMapping("/revenue-by-month")
+	@ResponseBody
+	public List<Object[]> getRevenueByMonth() {
+		return orderService.getRevenueByMonth();
+	}
+
+	@GetMapping("/revenue-by-year")
+	@ResponseBody
+	public List<Object[]> getRevenueByYear() {
+		return orderService.getRevenueByYear();
 	}
 
 }

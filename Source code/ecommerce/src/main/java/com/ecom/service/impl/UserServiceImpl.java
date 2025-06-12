@@ -183,4 +183,14 @@ public class UserServiceImpl implements UserService {
 		return userRepository.countByRole(role);
 	}
 
+	@Override
+	public Boolean deleteUser(Integer id) {
+		Optional<UserDtls> userOpt = userRepository.findById(id);
+		if (userOpt.isPresent()) {
+			userRepository.delete(userOpt.get());
+			return true;
+		}
+		return false;
+	}
+
 }

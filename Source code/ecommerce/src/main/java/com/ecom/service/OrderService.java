@@ -26,4 +26,10 @@ public interface OrderService {
 	public Double getTotalRevenue();
 
 	public Object[] getBestSellingProduct();
+
+	Long getTotalOrderCount();
+
+	List<Object[]> getRevenueByDay();
+	List<Object[]> getRevenueByMonth();
+	List<Object[]> getRevenueByYear();
 }

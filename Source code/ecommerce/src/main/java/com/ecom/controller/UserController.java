@@ -54,6 +54,9 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private ProductOrderRepository productOrderRepository;
+
 	@GetMapping("/")
 	public String home() {
 		return "user/home";
@@ -123,23 +126,25 @@ public class UserController {
 		}
 		return "/user/order";
 	}
-	@Autowired
-private ProductOrderRepository productOrderRepository;
-	@PostMapping("/save-order")
-	public String saveOrder(@ModelAttribute OrderRequest request, Principal p,   @RequestParam("paymentType") String paymentType,
-	HttpSession session) throws Exception {
-		// // System.out.println(request);
-		// UserDtls user = getLoggedInUserDetails(p);
-		// orderService.saveOrder(user.getId(), request);
 
-		// return "redirect:/user/success";
-		// }
+	@PostMapping("/save-order")
+	public String saveOrder(@ModelAttribute OrderRequest request, Principal p, @RequestParam("paymentType") String paymentType,
+	HttpSession session) throws Exception {
 		try {
 			UserDtls user = getLoggedInUserDetails(p);
 			orderService.saveOrder(user.getId(), request);
+			if ("MOMO".equalsIgnoreCase(paymentType)) {
+				// Lấy đơn hàng mới nhất của user
+				ProductOrder latestOrder = productOrderRepository.findTopByUserIdOrderByIdDesc(user.getId());
+				if (latestOrder != null) {
+					String orderId = latestOrder.getOrderId();
+					double amount = latestOrder.getPrice() * latestOrder.getQuantity();
+					return "redirect:/momo/payment?amount=" + ((long)amount )+ "&orderInfo=" + orderId;
+				}
+				return "redirect:/user/orders?error=momo";
+			}
 			if ("ONLINE".equalsIgnoreCase(paymentType)) {
-				
-					return "redirect:/user/checkout";
+				return "redirect:/user/checkout";
 			}
 			return "redirect:/user/success";
 		} catch (Exception e) {

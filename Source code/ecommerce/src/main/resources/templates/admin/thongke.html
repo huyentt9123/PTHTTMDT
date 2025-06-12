@@ -10,7 +10,7 @@
 		<div class="container p-5">
 			<p class="text-center fs-3 mt-4">Thống kê tổng quan</p>
 			<div class="row mb-4">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="card text-center">
 						<div class="card-body">
 							<h5>Khách hàng</h5>
@@ -18,7 +18,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="card text-center">
 						<div class="card-body">
 							<h5>Sản phẩm</h5>
@@ -26,7 +26,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="card text-center">
 						<div class="card-body">
 							<h5>Doanh thu</h5>
@@ -34,7 +34,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<!-- <div class="col-md-3">
 					<div class="card text-center">
 						<div class="card-body">
 							<h5>Bán chạy nhất</h5>
@@ -42,9 +42,83 @@
 							<span th:text="${bestProductSold}"></span> lượt bán
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
+	
+	<div class="container">
+		<h4 class="text-center mt-5">Biểu đồ doanh thu</h4>
+		<div class="row">
+			<div class="col-md-12 mb-4">
+				<canvas id="revenueDayChart"></canvas>
+			</div>
+			<div class="col-md-6 mb-4">
+				<canvas id="revenueMonthChart"></canvas>
+			</div>
+			<div class="col-md-6 mb-4">
+				<canvas id="revenueYearChart"></canvas>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+	// Biểu đồ doanh thu theo ngày
+	fetch('/admin/revenue-by-day')
+		.then(res => res.json())
+		.then(data => {
+			const labels = data.map(item => item[0]);
+			const values = data.map(item => item[1]);
+			new Chart(document.getElementById('revenueDayChart'), {
+				type: 'line',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: 'Doanh thu theo ngày',
+						data: values,
+						borderColor: 'rgba(75, 192, 192, 1)',
+						backgroundColor: 'rgba(75, 192, 192, 0.2)',
+						fill: true
+					}]
+				}
+			});
+		});
+	// Biểu đồ doanh thu theo tháng
+	fetch('/admin/revenue-by-month')
+		.then(res => res.json())
+		.then(data => {
+			const labels = data.map(item => item[0] + '-' + item[1]);
+			const values = data.map(item => item[2]);
+			new Chart(document.getElementById('revenueMonthChart'), {
+				type: 'bar',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: 'Doanh thu theo tháng',
+						data: values,
+						backgroundColor: 'rgba(255, 159, 64, 0.6)'
+					}]
+				}
+			});
+		});
+	// Biểu đồ doanh thu theo năm
+	fetch('/admin/revenue-by-year')
+		.then(res => res.json())
+		.then(data => {
+			const labels = data.map(item => item[0]);
+			const values = data.map(item => item[1]);
+			new Chart(document.getElementById('revenueYearChart'), {
+				type: 'bar',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: 'Doanh thu theo năm',
+						data: values,
+						backgroundColor: 'rgba(54, 162, 235, 0.6)'
+					}]
+				}
+			});
+		});
+	</script>
 	</section>
 </body>
 </html> 
